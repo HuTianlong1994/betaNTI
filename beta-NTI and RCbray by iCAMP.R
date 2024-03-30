@@ -1,13 +1,13 @@
-#本函数依赖picant、ape、doParrallel、foreach四个包
+#本函数依赖picant、ape、iCAMP三个包
 #threads：使用的线程数，可用detectCores()函数查看可使用的CPU数。
 #使用的CPU数并不是越多越好，还要顾及自己的内存是否足够，因为每开一个线程都会占据相同的内存。
 #otu_niche表示行为样点，列为OTU的表；otu_tree表示OTU的遗传发育树；
-#reps表示构建的零模型的个数；threads表示使用的线程数。
+#reps表示构建的零模型的个数；
 library(picante)
 library(ape)
 library(iCAMP)
 #读取OTU表
-otu_biom2 <- read.delim("./otu table.txt", row.names=1)
+otu_biom2 <- read.delim("./data/otu table.txt", row.names=1)
 #查看样品序列条数
 summary(colSums(otu_biom2))
 otu_biom2  = otu_biom2[,colSums(otu_biom2) > 8500]
@@ -21,7 +21,7 @@ head(rowSums(otu))
 otu_niche<-otu[,log(colSums(otu)/sum(otu),10)>-4.5]
 #otu_niche<-otu[,1:200]
 #读取树文件
-otu_tree<-read.tree("./tree")
+otu_tree<-read.tree("./data/tree")
 #去除发育树中不存在于OTU表中的OTU
 prune_tree<-prune.sample(otu_niche,otu_tree) 
 #获取发育树中OTU的名称
